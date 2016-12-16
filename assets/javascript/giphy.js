@@ -4,7 +4,73 @@
 
  var search = "";
 
+ var actors = [("Christopher Walken")];
+			   // ("Tom Hanks "),
+			   // ("Nicholas Cage "),
+			   // ("Arnold Schwarzenegger "),
+			   // ("Dwayne Johnson "),
+         // ("Samuel L Jackson")];
+
+var button = $('<input type = "button"/>').val(actors);
+
  //Perform function when button is clicked
+
+ for (var i = 0; i < actors.length; i++) {
+
+ 	for (var j = 0; j < actors[i].length; j++) {
+
+ 	$("#buttons").append(button).append("  ");
+
+ };
+};
+
+    $("#buttons").on("click", function () {
+      var person = $(this).val(button);
+
+      var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +
+         button + "&api_key=dc6zaTOxFJmzC&limit=10";
+        console.log(queryURL);
+
+          $.ajax({
+          url: queryURL,
+          method: "GET"
+        })
+        .done(function(response) {
+          var results = response.data;
+
+           for (var i = 0; i < results.length; i++) {
+
+            //Creates div for gif
+
+            var gifDiv = $("<div class='item'>");
+
+            //Searches for rating of gif
+
+            var rating = results[i].rating;
+
+            //Adds rating
+
+            var p = $("<p>").text("Rating: " + rating);
+
+            //Looks for gifs matching search term
+
+            var personImage = $("<img>");
+            personImage.attr("src", results[i].images.fixed_height.url);
+
+            //Adds gif to page
+            gifDiv.prepend(p);
+            gifDiv.prepend(personImage);
+
+            $("#gif-display").prepend(gifDiv);
+
+
+          }
+
+
+      });
+
+    });
+
 
     $("#submit").on("click", function () {
 
@@ -37,7 +103,7 @@
 
             //Creates div for gif
 
-            var gifDiv = $("<div class='item'>");
+            var gifDiv = $("<div class='item' data-state='still'>");
 
             //Searches for rating of gif
 
@@ -60,6 +126,24 @@
 
 
           }
+
+          //Click Gifs to animate
+
+          $(".item").on("click", function() {
+
+          var state = $(this).attr("data-state");
+
+          if (state === "still") {
+            $(this).attr("src", $(this).data("animate"));
+            $(this).attr("data-state", "animate");
+
+          } else {
+            $(this).attr("src", $(this).data("still"));
+            $(this).attr("data-state", "still");
+          }
+        });
+
+
 
  //Creates buttons for search terms
 
