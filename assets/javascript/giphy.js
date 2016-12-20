@@ -103,7 +103,7 @@ var button = $('<input type = "button"/>').val(actors);
 
             //Creates div for gif
 
-            var gifDiv = $("<div class='item' data-state='still'>");
+            var gifDiv = $("<div class='item'>");
 
             //Searches for rating of gif
 
@@ -116,7 +116,7 @@ var button = $('<input type = "button"/>').val(actors);
             //Looks for gifs matching search term
 
             var personImage = $("<img>");
-            personImage.attr("src", results[i].images.fixed_height.url);
+            personImage.attr("src", results[i].images.fixed_height_still.url);
 
             //Adds gif to page
             gifDiv.prepend(p);
@@ -134,11 +134,11 @@ var button = $('<input type = "button"/>').val(actors);
           var state = $(this).attr("data-state");
 
           if (state === "still") {
-            $(this).attr("src", $(this).data("animate"));
+            $("<img>").attr("src", results[i].images.fixed_height.url);
             $(this).attr("data-state", "animate");
 
           } else {
-            $(this).attr("src", $(this).data("still"));
+            $("<img>").attr("src", results[i].images.fixed_height_still.url);
             $(this).attr("data-state", "still");
           }
         });
