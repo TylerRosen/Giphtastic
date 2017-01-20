@@ -1,124 +1,125 @@
 //Global Variables
+// ------------------------------------------------------------
+var search = "";
 
- // ------------------------------------------------------------
+var actors = ["Christopher Walken",
+    "Tom Hanks",
+    "Nicholas Cage",
+    "Arnold Schwarzenegger",
+    "Dwayne Johnson",
+    "Samuel L Jackson"
+];
 
- var search = "";
+//Creates multiple buttons for actors array
 
- var actors = ["Christopher Walken",
-         "Tom Hanks",
-         "Nicholas Cage",
-         "Arnold Schwarzenegger",
-         "Dwayne Johnson",
-         "Samuel L Jackson"];
+for (var i = 0; i < actors.length; i++) {
+    var button = $('<button> </button');
 
- //Creates multiple buttons for actors array
+    newButton = $(button).html(actors[i]);
 
- for (var i = 0; i < actors.length; i++) {
-  var button = $('<button> </button');
+    $("#buttons").append(newButton);
 
+};
 
+// Creats gifs on click
 
-  newButton = $(button).html(actors[i]);
+$(document).on("click", "button", function() {
+    var person = $(this).text();
+    console.log(person);
+    populateImages(person);
 
-  $("#buttons").append(newButton);
-
-   };
-
-   // Creats gifs on click
-
-    $(document).on("click", "button", function () {
-      var person = $(this).text();
-      console.log(person);
-      populateImages(person);
-
-      $("#gif-display").empty();
+    $("#gif-display").empty();
 
 });
 
-    function populateImages (person) {
+function populateImages(person) {
 
-        var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
         person + "&api_key=dc6zaTOxFJmzC&limit=10";
-        console.log(queryURL);
+    console.log(queryURL);
 
-          $.ajax({
-          url: queryURL,
-          method: "GET"
+    $.ajax({
+            url: queryURL,
+            method: "GET"
         })
         .done(function(response) {
-          var results = response.data;
+            var results = response.data;
 
-           for (var i = 0; i < results.length; i++) {
+            for (var i = 0; i < results.length; i++) {
 
-            //Creates div for gif
+                //Creates div for gif
 
-            var gifDiv = $("<div class='item'>");
+                var gifDiv = $("<div class='item'>");
 
-            //Searches for rating of gif
+                //Searches for rating of gif
 
-            var rating = results[i].rating;
+                var rating = results[i].rating;
 
-            //Adds rating
+                //Adds rating
 
-            var p = $("<p>").text("Rating: " + rating);
+                var p = $("<p>").text("Rating: " + rating);
 
-            //Looks for gifs matching search term
+                //Looks for gifs matching search term
 
-            var still = results[i].images.fixed_height_still.url;
-            var animated = results[i].images.fixed_height.url
+                var still = results[i].images.fixed_height_still.url;
+                var animated = results[i].images.fixed_height.url
 
-            var personImage = $("<img>");
-            personImage.attr("src", still);
-            personImage.attr("data-state", "still");
-            personImage.attr("data-still", still);
-            personImage.attr("data-animate", animated);
+                var personImage = $("<img>");
+                personImage.attr("src", still);
+                personImage.attr("data-state", "still");
+                personImage.attr("data-still", still);
+                personImage.attr("data-animate", animated);
 
-            //Adds gif to page
-            gifDiv.prepend(p);
-            gifDiv.prepend(personImage);
+                //Adds gif to page
+                gifDiv.prepend(p);
+                gifDiv.prepend(personImage);
 
-            $("#gif-display").prepend(gifDiv);
+                $("#gif-display").prepend(gifDiv);
 
-          }
+            }
 
-
-      });
-
-    };
-
-    //Click Gifs to animate
-
-          $(document).on("click", "img", function() {  
-
-          var state = $(this).attr("data-state");
-
-          if (state === "still") {
-            $(this).attr("src", $(this).data("animate"));
-            $(this).attr("data-state", "animate");
-
-          } else {
-            $(this).attr("src", $(this).data("still"));
-            $(this).attr("data-state", "still");
-          };
 
         });
 
+};
+
+//Click Gifs to animate
+
+$(document).on("click", "img", function() {
+
+    var state = $(this).attr("data-state");
+
+    //Changes still to animate
+
+    if (state === "still") {
+        $(this).attr("src", $(this).data("animate"));
+        $(this).attr("data-state", "animate");
+
+    //Changes animate to still
+
+    } else {
+        $(this).attr("src", $(this).data("still"));
+        $(this).attr("data-state", "still");
+    };
+
+});
+
+//When clicking submit button
+
+$("#submit").on("click ", function() {
+
+    //Searches for query
+
+    search = $("#gifs").val().trim();
+    $("#gifs").val("");
 
 
-    $("#submit").on("click ", function () {
 
-//Searches for query
+    //Creates buttons for search terms
 
-      search = $("#gifs").val().trim();
-      $("#gifs").val("");
+    var button = $('<button></button').html(search);
+
+    $("#buttons").append(button);
 
 
-
- //Creates buttons for search terms
-
-          var button = $('<button></button').html(search);
-
-          $("#buttons").append(button);
-            
-
-      });
+});
