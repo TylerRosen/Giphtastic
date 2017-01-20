@@ -1,34 +1,42 @@
- //Global Variables
+//Global Variables
 
  // ------------------------------------------------------------
 
  var search = "";
 
- var actors = [("Christopher Walken")];
-			   // ("Tom Hanks "),
-			   // ("Nicholas Cage "),
-			   // ("Arnold Schwarzenegger "),
-			   // ("Dwayne Johnson "),
-         // ("Samuel L Jackson")];
+ var actors = ["Christopher Walken",
+         "Tom Hanks",
+         "Nicholas Cage",
+         "Arnold Schwarzenegger",
+         "Dwayne Johnson",
+         "Samuel L Jackson"];
 
-var button = $('<input type = "button"/>').val(actors);
-
- //Perform function when button is clicked
+ //Creates multiple buttons for actors array
 
  for (var i = 0; i < actors.length; i++) {
+  var button = $('<button> </button');
 
- 	for (var j = 0; j < actors[i].length; j++) {
 
- 	$("#buttons").append(button).append("  ");
 
- };
-};
+  newButton = $(button).html(actors[i]);
 
-    $("#buttons").on("click", function () {
-      var person = $(this).val(button);
+  $("#buttons").append(newButton);
 
-      var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +
-         button + "&api_key=dc6zaTOxFJmzC&limit=10";
+   };
+
+   // Creats gifs on click
+
+    $(document).on("click", "button", function () {
+      var person = $(this).text();
+      console.log(person);
+      populateImages(person);
+
+});
+
+    function populateImages (person) {
+
+        var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +
+        person + "&api_key=dc6zaTOxFJmzC&limit=10";
         console.log(queryURL);
 
           $.ajax({
@@ -54,108 +62,61 @@ var button = $('<input type = "button"/>').val(actors);
 
             //Looks for gifs matching search term
 
+            var still = results[i].images.fixed_height_still.url;
+            var animated = results[i].images.fixed_height.url
+
             var personImage = $("<img>");
-            personImage.attr("src", results[i].images.fixed_height.url);
+            personImage.attr("src", still);
+            personImage.attr("data-state", "still");
+            personImage.attr("data-still", still);
+            personImage.attr("data-animate", animated);
 
             //Adds gif to page
             gifDiv.prepend(p);
             gifDiv.prepend(personImage);
 
             $("#gif-display").prepend(gifDiv);
-
 
           }
 
 
       });
 
-    });
+    };
 
+    //Click Gifs to animate
 
-    $("#submit").on("click", function () {
-
-//Searches for query
-
-      search = $("#gifs").val().trim();
-
-//API URL/Key
-
-      var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +
-        search + "&api_key=dc6zaTOxFJmzC&limit=10";
-
-//AJAX info
-
-      $.ajax({
-          url: queryURL,
-          method: "GET"
-        })
-        .done(function(response) {
-          var results = response.data;
-
-//Checks results
-
-          for (var i = 0; i < results.length; i++) {
-
-          	//Adds search term to URL
-
-            var searchURL = queryURL + "&q=" + search;
-            console.log(searchURL)
-
-            //Creates div for gif
-
-            var gifDiv = $("<div class='item'>");
-
-            //Searches for rating of gif
-
-            var rating = results[i].rating;
-
-            //Adds rating
-
-            var p = $("<p>").text("Rating: " + rating);
-
-            //Looks for gifs matching search term
-
-            var personImage = $("<img>");
-            personImage.attr("src", results[i].images.fixed_height_still.url);
-
-            //Adds gif to page
-            gifDiv.prepend(p);
-            gifDiv.prepend(personImage);
-
-            $("#gif-display").prepend(gifDiv);
-
-
-          }
-
-          //Click Gifs to animate
-
-          $(".item").on("click", function() {
+          $(document).on("click", "img", function() {  
 
           var state = $(this).attr("data-state");
 
           if (state === "still") {
-            $("<img>").attr("src", results[i].images.fixed_height.url);
+            $(this).attr("src", $(this).data("animate"));
             $(this).attr("data-state", "animate");
 
           } else {
-            $("<img>").attr("src", results[i].images.fixed_height_still.url);
+            $(this).attr("src", $(this).data("still"));
             $(this).attr("data-state", "still");
-          }
+          };
+
         });
+
+
+
+    $("#submit").on("click ", function () {
+
+//Searches for query
+
+      search = $("#gifs").val().trim();
+      $("#gifs").val("");
 
 
 
  //Creates buttons for search terms
 
-          var button = $('<input type = "button"/>').val(search);
-          $("#buttons").append(button).append("  ");
+          var button = $('<button></button').html(search);
 
-           // $("#buttons").on("click", function() {
-          	
+          $("#buttons").append(button);
+            
 
       });
-
-        });
-
-    // });
-
