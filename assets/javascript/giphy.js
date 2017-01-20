@@ -31,6 +31,8 @@
       console.log(person);
       populateImages(person);
 
+      $("#gif-display").empty();
+
 });
 
     function populateImages (person) {
