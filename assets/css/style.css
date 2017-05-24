@@ -1,9 +1,32 @@
 body {
     text-align: center;
-    background-color: #121212
+    background-color: #121212;
 }
 
-h1, h3 {
+.container {
+    background-color: #2e3033
+}
+
+h1, h3, button {
     color: #ffffff;
     font-family: 'interface','Helvetica Neue',helvetica,sans-serif;
+}
+
+button, #submit {
+    cursor: pointer;
+}
+
+button {
+    border-right: 4px solid #121212;
+    padding: 8.5px 16px;
+    margin-right: 5px;
+    display: inline-block;
+    background-color:#6d63ff;
+    font-weight: bold;
+    border: none;
+    outline: none;
+}
+
+#gifs {
+    width: 15%;
 }

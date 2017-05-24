@@ -15,7 +15,7 @@ for (var i = 0; i < actors.length; i++) {
 
     $(button).html(actors[i]);
 
-    $("#buttons").append(button);
+    $(".buttons").append(button);
 
 };
 
@@ -117,7 +117,7 @@ $("#submit").on("click ", function() {
 
     var button = $('<button></button').html(search);
 
-    $("#buttons").append(button);
+    $(".buttons").append(button);
 
 
 });
