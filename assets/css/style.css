@@ -3,10 +3,6 @@ body {
     background-color: #121212;
 }
 
-.container {
-    background-color: #2e3033
-}
-
 h1, h3, button {
     color: #ffffff;
     font-family: 'interface','Helvetica Neue',helvetica,sans-serif;
