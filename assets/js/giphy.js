@@ -3,11 +3,9 @@
 var search = "";
 
 var actors = ["Christopher Walken",
-    "Tom Hanks",
     "Nicholas Cage",
     "Arnold Schwarzenegger",
-    "Dwayne Johnson",
-    "Samuel L Jackson"
+    "Batman"
 ];
 
 //Creates multiple buttons for actors array
@@ -15,13 +13,13 @@ var actors = ["Christopher Walken",
 for (var i = 0; i < actors.length; i++) {
     var button = $('<button> </button');
 
-    newButton = $(button).html(actors[i]);
+    $(button).html(actors[i]);
 
-    $("#buttons").append(newButton);
+    $("#buttons").append(button);
 
 };
 
-// Creats gifs on click
+// Creates gifs on click
 
 $(document).on("click", "button", function() {
     var person = $(this).text();

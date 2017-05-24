@@ -1,46 +1,54 @@
-<DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<title>Giphy</title>
+    <meta charset="UTF-8">
+    <title>Giphy</title>
+
+    <!--Links CSS-->
+
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+
 </head>
+
 <body>
 
-<!-- Gif buttons appear here -->
+    <h1>Giphtastic!</h1>
 
-<div id="buttons"></div>
+    <!-- Gif buttons appear here -->
 
-<!-- Search Box -->
-<div id="search">
-<h3><strong>Add	an Actor!</strong></h3>
-<input type="text" id="gifs">
-<br>
-<br>	
-<input type="submit" id="submit">
-</div>
+    <div id="buttons"></div>
 
-<br>
+    <!-- Search Box -->
+    <div id="search">
+        <h3><strong>Add	an Actor!</strong></h3>
+        <input type="text" id="gifs">
+        <br>
+        <br>
+        <input type="submit" id="submit">
+    </div>
 
-<!-- Gifs display here -->
-<div id="gif-display"></div>
+    <br>
 
-<!-- Styling -->
+    <!-- Gifs display here -->
+    <div id="gif-display"></div>
 
-<style>
+    <!-- Styling -->
 
-#search{
-	float: right;
-	margin-right: 40px ;
-}
+    <style>
+        #search {
+            float: right;
+            margin-right: 40px;
+        }
+    </style>
 
-</style>
+    <!-- Jquery -->
 
-<!-- Jquery -->
+    <script src="https://code.jquery.com/jquery.js"></script>
 
-<script src="https://code.jquery.com/jquery.js"></script>
+    <!-- Links javascript -->
+    <script src="assets/js/giphy.js"></script>
 
-<!-- Links javascript -->
-	<script src="assets/javascript/giphy.js"></script>
-	
 </body>
+
 </html>
